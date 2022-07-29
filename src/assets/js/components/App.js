@@ -1,7 +1,44 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
+import {useSelector, useDispatch} from "react-redux";
+import { getData, activeDropMenu } from "../stores/actions"
+
+import CardList from "./CardList/CardList";
+import DropList from "./dropList/DropList";
 
 const App = function () {
 
+	const dispatch = useDispatch();
+	const [region, setRegion] = useState("All");
+	const [dropActive, setDropActive] = useState(false);
+
+	let data = useSelector((state) => {
+
+		const {cardReducer} = state;
+		return cardReducer.data
+	});
+
+	function setRegions (val) {
+
+		setRegion(val);
+		dropListActivate()
+	}
+
+	let dropClass = useSelector((state) => {
+
+		const {dropItemReducer} = state;
+		return dropItemReducer.className
+	});
+
+	useEffect(() => {
+
+		dispatch(getData());
+	}, []);
+
+	function dropListActivate() {
+
+		dispatch(activeDropMenu(dropActive));
+		setDropActive(!dropActive);
+	}
 	return (
 		<div id="container" className="container">
 			<header className="container__header">
@@ -20,45 +57,17 @@ const App = function () {
 						<input type="search" className="content__search" placeholder="Search for a country..."/>
 					</label>
 					<div className="content__dropdown">
-						<button className="content__category">
+						<button className="content__category" onClick={dropListActivate}>
 							<span className="content__category-text">Filter by Region</span>
 							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" enableBackground="new 0 0 129 129"><g><path d="m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z"/></g></svg>
 						</button>
-						<div className="content__dropdown-list">
-							<ul className="content__region-list">
-								<li className="content__region-item">Africa</li>
-								<li className="content__region-item">America</li>
-								<li className="content__region-item">Asia</li>
-								<li className="content__region-item">Europe</li>
-								<li className="content__region-item">Oceania</li>
-							</ul>
+						<div className={["content__dropdown-list", dropClass].join(" ")}>
+							<DropList data={data} setRegion={setRegions}/>
 						</div>
 					</div>
 				</div>
-				<div className="content__list">
-					<ul className="content__cards">
-						<li className="content__card card">
-							<div className="card__img">
-								<img src="/assets/img/germanyflag.png" alt="germanyflag"/>
-							</div>
-							<div className="card__content">
-								<h2 className="card__title">Germany</h2>
-								<div className="card__desc">
-									<p className="card__text">Population:</p>
-									<p className="card__numb">81,770,900</p>
-								</div>
-								<div className="card__desc">
-									<p className="card__text">Region:</p>
-									<p className="card__numb">Europe</p>
-								</div>
-								<div className="card__desc">
-									<p className="card__text">Capital:</p>
-									<p className="card__numb">Berlin</p>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
+				<CardList data={data} region={region}/>
+
 			</main>
 		</div>
 	)

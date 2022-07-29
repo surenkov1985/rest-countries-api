@@ -1,0 +1,43 @@
+.card {
+	box-shadow: 0px 2px 10px 0px rgba(34, 60, 80, 0.2);
+	border-radius: 7px;
+	cursor: pointer;
+	transition: all 0.1s;
+
+	&:hover {
+		opacity: 0.6;
+	}
+
+
+	&__content {
+		padding: 25px 25px 45px;
+		display: flex;
+		flex-direction: column;
+		row-gap: 10px;
+	}
+
+	&__img {
+		height: 42%;
+	}
+
+	&__img > img {
+		width: 100%;
+		height: 100%;
+		border-radius: 5px 5px 0 0;
+		object-fit: fill;
+	}
+
+	&__title {
+		font-size: 18px;
+		font-weight: 800;
+		margin-bottom: 10px;
+	}
+
+	&__desc {
+		font-size: 14px;
+	}
+
+	&__text {
+		font-weight: 800;
+	}
+}
