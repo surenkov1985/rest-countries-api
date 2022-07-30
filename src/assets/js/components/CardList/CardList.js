@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react"
 import Card from "../card/Card"
 
-export default function CardList({data, region}) {
+export default function CardList({data, region, searchVal, onClick}) {
 
 	const [cardsData, setCardsData] = useState(data);
 
@@ -9,19 +9,22 @@ export default function CardList({data, region}) {
 
 		setCardsData(data.filter((item) => {
 
-			if (region === "All") {
-
-				return item
-			} else {
-
-				return item.region === region
-			}
+			return item.name.toLowerCase().includes(searchVal.toLowerCase())
 		}))
-	}, [region,data]);
+	}, [searchVal, data]);
 
 	return (
 		<div className="content__cards">
-			{cardsData.map((item) => {
+			{cardsData.filter((item) => {
+
+				if (region === "All") {
+
+					return item
+				} else {
+
+					return item.region === region
+				}
+			}).map((item) => {
 
 				return (
 					<Card
@@ -31,6 +34,7 @@ export default function CardList({data, region}) {
 						population={item.population}
 					    region={item.region}
 						capital={item.capital}
+					    onClick={() => onClick(item)}
 					/>
 				)
 			})}

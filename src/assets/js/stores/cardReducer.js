@@ -1,9 +1,11 @@
 import React from "react"
 
-import {GET_DATA} from "./types"
+import {GET_DATA, INPUT_TEXT, SET_REGION} from "./types"
 
 const initialState = {
 	data: [],
+	searchText: "",
+	region: "All"
 };
 
 export const cardReducer = (state = initialState, action) => {
@@ -14,6 +16,16 @@ export const cardReducer = (state = initialState, action) => {
 			return {
 				...state,
 				data: [...action.data]
+			};
+		case INPUT_TEXT:
+			return {
+				...state,
+				searchText: action.searchText
+			};
+		case SET_REGION:
+			return {
+				...state,
+				region: action.region
 			}
 
 		default: return state;

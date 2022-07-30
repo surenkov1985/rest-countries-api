@@ -1,4 +1,4 @@
-import { GET_DATA, DROP_ITEM } from "./types"
+import { GET_DATA, DROP_ITEM, INPUT_TEXT, SET_COUNTRY, SET_COUNTRY_ACTIVE, SET_REGION } from "./types"
 
 
 export const getData = () => {
@@ -7,7 +7,6 @@ export const getData = () => {
 		const response = await fetch("https://restcountries.com/v2/all");
 
 		const json = await response.json();
-		console.log(json)
 		dispatch(fetchData(json))
 	}
 };
@@ -27,4 +26,36 @@ export const activeDropMenu = (active) => {
 		active
 	}
 
+};
+
+export const setRegion = (region) => {
+
+	return {
+		type: SET_REGION,
+		region
+	}
+};
+
+export const onInputText = (searchText) => {
+
+	return {
+		type: INPUT_TEXT,
+		searchText
+	}
+};
+
+export const setCountry = (data) => {
+
+	return {
+		type: SET_COUNTRY,
+		data
+	}
+};
+
+export const setCountryActivate = (active) => {
+
+	return {
+		type: SET_COUNTRY_ACTIVE,
+		active
+	}
 };
