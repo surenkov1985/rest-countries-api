@@ -1,5 +1,6 @@
 @import "./utils/reset";
 @import "./utils/fonts";
+@import "./utils/dark-theme";
 
 * {
 	font-family: "Nunito Sans";
@@ -10,6 +11,7 @@ body {
 	width: 100%;
 	height: 100%;
 	min-width: 375px;
+	background: #FAFAFA;
 }
 
 #app {
@@ -21,19 +23,9 @@ body {
 
 .container {
 	width: 100%;
-	max-width: 1440px;
-
-	&__header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 25px 75px;
-		box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.4);
-
-		@media (max-width: 500px) {
-			padding: 30px 20px;
-		}
-	}
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
 	&__title {
 		font-size: 21px;
@@ -68,10 +60,33 @@ body {
 			font-size: 15px;
 		}
 	}
+}
 
+.header {
+	width: 100%;
+	background: #FFFFFF;
+	box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.2);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&__content {
+		width: 100%;
+		max-width: 1440px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 25px 75px;
+
+		@media (max-width: 500px) {
+			padding: 30px 20px;
+		}
+	}
 }
 
 .content {
+	width: 100%;
+	max-width: 1440px;
 	padding: 45px 75px;
 
 	@media (max-width: 500px) {
@@ -95,7 +110,7 @@ body {
 		display: flex;
 		align-items: center;
 		padding: 18px 30px;
-		box-shadow: 0px 2px 10px 0px rgba(34, 60, 80, 0.2);
+		box-shadow: 0 2px 10px 0 rgba(34, 60, 80, 0.1);
 		border-radius: 5px;
 
 		& > svg {
@@ -146,7 +161,8 @@ body {
 		align-items: center;
 		column-gap: 50px;
 		cursor: pointer;
-		box-shadow: 0px 2px 10px 0px rgba(34, 60, 80, 0.2);
+		box-shadow: 0 2px 10px 0 rgba(34, 60, 80, 0.1);
+		background: #FFFFFF;
 		border-radius: 5px;
 		padding: 18px 20px;
 		position: relative;
@@ -160,7 +176,6 @@ body {
 			position: absolute;
 			right: 20px;
 		}
-
 	}
 
 	&__back-country {
@@ -230,10 +245,6 @@ body {
 	&__category-text {
 		font-size: 13px;
 		font-weight: 600;
-	}
-
-	&__list {
-
 	}
 
 	&__cards {

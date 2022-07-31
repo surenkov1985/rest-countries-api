@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import {useSelector, useDispatch} from "react-redux";
-import { getData, activeDropMenu, onInputText, setCountry, setCountryActivate, setRegion } from "../stores/actions"
+import { getData, activeDropMenu, onInputText, setCountry, setCountryActivate, setRegion, themeToggle } from "../stores/actions"
 
 import CardList from "./CardList/CardList";
 import DropList from "./dropList/DropList";
@@ -13,6 +13,7 @@ const App = function () {
 	const dispatch = useDispatch();
 	const [regionText, setRegionText] = useState("Filter by Region");
 	const [dropActive, setDropActive] = useState(false);
+
 
 	useEffect(() => {
 
@@ -55,11 +56,23 @@ const App = function () {
 		return setCountryReducer.countryData;
 	});
 
+	let theme = useSelector((state) => {
+
+		const {themeReducer} = state;
+		return themeReducer.darkTheme
+	});
+
+	useEffect(() => {
+
+		document.body.classList = theme
+	}, [theme])
+
 	const themeControl = {
 		btnClassName: "container__theme",
 		textClassName: "container__theme-text",
 		text: "Dark Mode",
-		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="var(--ci-primary-color, currentColor)" d="M268.279,496c-67.574,0-130.978-26.191-178.534-73.745S16,311.293,16,243.718A252.252,252.252,0,0,1,154.183,18.676a24.44,24.44,0,0,1,34.46,28.958,220.12,220.12,0,0,0,54.8,220.923A218.746,218.746,0,0,0,399.085,333.2h0a220.2,220.2,0,0,0,65.277-9.846,24.439,24.439,0,0,1,28.959,34.461A252.256,252.256,0,0,1,268.279,496ZM153.31,55.781A219.3,219.3,0,0,0,48,243.718C48,365.181,146.816,464,268.279,464a219.3,219.3,0,0,0,187.938-105.31,252.912,252.912,0,0,1-57.13,6.513h0a250.539,250.539,0,0,1-178.268-74.016,252.147,252.147,0,0,1-67.509-235.4Z" className="ci-primary"/></svg>
+		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="var(--ci-primary-color, currentColor)" d="M268.279,496c-67.574,0-130.978-26.191-178.534-73.745S16,311.293,16,243.718A252.252,252.252,0,0,1,154.183,18.676a24.44,24.44,0,0,1,34.46,28.958,220.12,220.12,0,0,0,54.8,220.923A218.746,218.746,0,0,0,399.085,333.2h0a220.2,220.2,0,0,0,65.277-9.846,24.439,24.439,0,0,1,28.959,34.461A252.256,252.256,0,0,1,268.279,496ZM153.31,55.781A219.3,219.3,0,0,0,48,243.718C48,365.181,146.816,464,268.279,464a219.3,219.3,0,0,0,187.938-105.31,252.912,252.912,0,0,1-57.13,6.513h0a250.539,250.539,0,0,1-178.268-74.016,252.147,252.147,0,0,1-67.509-235.4Z" className="ci-primary"/></svg>,
+		onclick: darkThemeToggle
 	};
 
 	const regionControl = {
@@ -94,17 +107,24 @@ const App = function () {
 		dispatch(onInputText(e.target.value))
 	}
 
+	function darkThemeToggle() {
+
+		dispatch(themeToggle(theme));
+	}
+
 	return (
 		<div id="container" className="container">
-			<header className="container__header">
-				<h1 className="container__title">Where in the World?</h1>
-				<Button props={themeControl}/>
+			<header className="container__header header">
+				<div className="header__content">
+					<h1 className="container__title">Where in the World?</h1>
+					<Button props={themeControl}/>
+				</div>
 			</header>
 			<main className="container__content content">
 				{countriesActive ?
 					<div className="content__countries">
 						<div className="content__control">
-							<SearchInput onChange={onInput}/>
+							<SearchInput onChange={onInput} val={searchVal}/>
 							<div className="content__dropdown">
 								<Button props={regionControl}/>
 								<div className={["content__dropdown-list", dropClass].join(" ")}>

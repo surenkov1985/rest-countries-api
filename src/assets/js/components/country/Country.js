@@ -27,7 +27,7 @@ export default function Country({data, countryData}) {
 		onclick: returnCountries
 	};
 
-	const [currencies, setCurrencies] = useState([countryData.currencies.map((item) => {return item.name})]);
+	const [currencies, setCurrencies] = useState(setCurrency());
 	const [languages, setlanguages] = useState([countryData.languages.map((item) => {return item.name})]);
 	const [bordersCode, setBordersCode] = useState(setBorders());
 
@@ -42,8 +42,21 @@ export default function Country({data, countryData}) {
 				bordersArr.push(border.name)
 
 
-		})
+		});
 		return bordersArr
+	}}
+
+	function setCurrency() {
+
+		const currenciesArr = [];
+
+		if (countryData.currencies) {countryData.currencies.map((item) => {
+
+			currenciesArr.push(item.name)
+
+
+		});
+		return currenciesArr
 	}}
 
 	let numb= Number(countryData.population).toLocaleString('en-Us');
@@ -102,21 +115,21 @@ export default function Country({data, countryData}) {
 							</div>
 							<div className="country__item">
 								<span className="country__desc-text">Currencies: </span>
-								<span className="country__desc-val">{currencies.join(", ")}</span>
+								{currencies && <span className="country__desc-val">{currencies.join(", ")}</span>}
 							</div>
 							<div className="country__item">
 								<span className="country__desc-text">Languages: </span>
-								<span className="country__desc-val">{languages.join(", ")}</span>
+								<span className="country__desc-val"> {languages.join(", ")}</span>
 							</div>
 						</div>
 					</div>
 					<div className="country__border">
 						<div className="country__border-text">Border Countries: </div>
 						{bordersCode && <ul className="country__border-list">
-							{bordersCode.map((item) => {
+							{bordersCode.map((item, index) => {
 
 								return (
-									<li className="country__border-item">{item}</li>
+									<li className="country__border-item" key={index}>{item}</li>
 								)
 							})}
 						</ul>}

@@ -9,3 +9,5 @@ export const INPUT_TEXT = "INPUT_TEXT";
 export const SET_COUNTRY = "SET_COUNTRY";
 
 export const SET_COUNTRY_ACTIVE = "SET_COUNTRY_ACTIVE";
+
+export const THEME_TOGGLE = "THEME_TOGGLE";

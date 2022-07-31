@@ -1,4 +1,4 @@
-import { GET_DATA, DROP_ITEM, INPUT_TEXT, SET_COUNTRY, SET_COUNTRY_ACTIVE, SET_REGION } from "./types"
+import { GET_DATA, DROP_ITEM, INPUT_TEXT, SET_COUNTRY, SET_COUNTRY_ACTIVE, SET_REGION, THEME_TOGGLE } from "./types"
 
 
 export const getData = () => {
@@ -57,5 +57,13 @@ export const setCountryActivate = (active) => {
 	return {
 		type: SET_COUNTRY_ACTIVE,
 		active
+	}
+};
+
+export const themeToggle = (darkTheme) => {
+
+	return {
+		type: THEME_TOGGLE,
+		darkTheme
 	}
 };
