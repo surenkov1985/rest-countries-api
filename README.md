@@ -1,6 +1,6 @@
 # Frontend Mentor — API стран REST с переключателем цветовых тем
 
-![Предварительный просмотр дизайна](./design/desktop-preview.jpg)
+![Предварительный просмотр дизайна](https://res.cloudinary.com/dz209s6jk/image/upload/q_auto:good,w_900/Challenges/wirxeocmd6tpnn9c5oqc.jpg)
 
 Решение задания [REST Countries API with color theme switcher challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca).
 
