@@ -25,7 +25,6 @@ export default function DropList({data, setRegion}) {
 					<li className="content__region-item" key={index} onClick={() => {setRegion(region)}}>{region}</li>
 				)
 			})}
-
 		</ul>
 	)
 }

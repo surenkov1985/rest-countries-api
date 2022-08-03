@@ -1,7 +1,7 @@
 import "./country.scss"
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {useSelector, useDispatch} from "react-redux";
-import { setCountryActivate } from "../../stores/actions"
+import { setCountryActivate, setBorder } from "../../stores/actions"
 
 
 
@@ -10,14 +10,6 @@ import Button from "../button/Button"
 export default function Country({data, countryData}) {
 
 	const dispatch = useDispatch();
-
-	let countriesActive = useSelector((state) => {
-
-		const {setCountryReducer} = state;
-		return setCountryReducer.countriesActive;
-	});
-
-
 
 	const backRegionControl = {
 		btnClassName: "content__back-country",
@@ -31,17 +23,22 @@ export default function Country({data, countryData}) {
 	const [languages, setlanguages] = useState([countryData.languages.map((item) => {return item.name})]);
 	const [bordersCode, setBordersCode] = useState(setBorders());
 
+	useEffect(() => {
+		setCurrencies(setCurrency());
+		setlanguages([countryData.languages.map((item) => {return " " + item.name})]);
+		setBordersCode(setBorders())
+
+	}, [countryData]);
+
 	function setBorders() {
 
-		const bordersArr = []
+		const bordersArr = [];
 
 		if (countryData.borders) {countryData.borders.map((item) => {
 
 				let border = data.find((count) => { return count.alpha3Code === item})
 
 				bordersArr.push(border.name)
-
-
 		});
 		return bordersArr
 	}}
@@ -53,8 +50,6 @@ export default function Country({data, countryData}) {
 		if (countryData.currencies) {countryData.currencies.map((item) => {
 
 			currenciesArr.push(item.name)
-
-
 		});
 		return currenciesArr
 	}}
@@ -63,7 +58,12 @@ export default function Country({data, countryData}) {
 
 	function returnCountries() {
 
-		dispatch(setCountryActivate(!countriesActive))
+		dispatch(setCountryActivate())
+	}
+
+	function handleBorder(border) {
+
+		dispatch(setBorder(border, data))
 	}
 
 	return (
@@ -72,17 +72,9 @@ export default function Country({data, countryData}) {
 				<div className="content__control">
 					<Button props={backRegionControl}/>
 				</div>
-
-
 			</div>
 			<div className="country">
-				<div className="country__flag" style={{width: "43.5%",
-					height: 0,
-					paddingBottom: "31%",
-					background: `url(${countryData.flag})`,
-					backgroundSize: "cover",
-					backgroundRepeat: "no-repeat",
-					backgroundPosition: "center"}}/>
+				<div className="country__flag" style={{background: `url(${countryData.flag})`}}/>
 				<div className="country__description">
 					<h2 className="country__title">{countryData.name}</h2>
 					<div className="country__desc">
@@ -119,7 +111,9 @@ export default function Country({data, countryData}) {
 							</div>
 							<div className="country__item">
 								<span className="country__desc-text">Languages: </span>
-								<span className="country__desc-val"> {languages.join(", ")}</span>
+								<span className="country__desc-val"> {languages.map((text) => {
+									return ` ${text}, `
+								})}</span>
 							</div>
 						</div>
 					</div>
@@ -129,7 +123,7 @@ export default function Country({data, countryData}) {
 							{bordersCode.map((item, index) => {
 
 								return (
-									<li className="country__border-item" key={index}>{item}</li>
+									<li className="country__border-item" key={index} onClick={() => handleBorder(item)}>{item}</li>
 								)
 							})}
 						</ul>}

@@ -1,8 +1,7 @@
-import {SET_COUNTRY, SET_COUNTRY_ACTIVE} from "./types";
+import {SET_COUNTRY, SET_COUNTRY_ACTIVE, SET_BORDER} from "./types";
 
 const initialState = {
-	countryData: {},
-	countriesActive: true
+	countryData: []
 };
 
 export const setCountryReducer = (state = initialState, action) => {
@@ -11,13 +10,25 @@ export const setCountryReducer = (state = initialState, action) => {
 		case SET_COUNTRY:
 			return {
 				...state,
-				countryData: {...action.data}
+				countryData: [...state.countryData, action.data]
 			};
 		case SET_COUNTRY_ACTIVE:
+
+			const newCountryData = [...state.countryData]
+
+			if (state.countryData.length) {
+				newCountryData.pop()
+			}
+
 			return {
 				...state,
-				countriesActive: action.active
-			}
+				countryData: [...newCountryData]
+			};
+		case SET_BORDER:
+			return {
+				...state,
+				countryData: [...state.countryData, action.borderData]
+			};
 		default: return state
 	}
 };

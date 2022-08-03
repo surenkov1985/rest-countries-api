@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import {useSelector, useDispatch} from "react-redux";
-import { getData, activeDropMenu, onInputText, setCountry, setCountryActivate, setRegion, themeToggle } from "../stores/actions"
+import { getData, activeDropMenu, onInputText, setCountry, setRegion, themeToggle } from "../stores/actions"
 
 import CardList from "./CardList/CardList";
 import DropList from "./dropList/DropList";
@@ -14,7 +14,6 @@ const App = function () {
 	const [regionText, setRegionText] = useState("Filter by Region");
 	const [dropActive, setDropActive] = useState(false);
 
-
 	useEffect(() => {
 
 		dispatch(getData());
@@ -24,12 +23,6 @@ const App = function () {
 
 		const {cardReducer} = state;
 		return cardReducer.region
-	});
-
-	let countriesActive = useSelector((state) => {
-
-		const {setCountryReducer} = state;
-		return setCountryReducer.countriesActive;
 	});
 
 	let searchVal = useSelector((state) => {
@@ -65,7 +58,7 @@ const App = function () {
 	useEffect(() => {
 
 		document.body.classList = theme
-	}, [theme])
+	}, [theme]);
 
 	const themeControl = {
 		btnClassName: "container__theme",
@@ -85,7 +78,6 @@ const App = function () {
 
 	function countryChoise(obj) {
 
-		dispatch(setCountryActivate(!countriesActive))
 		dispatch(setCountry(obj));
 	}
 
@@ -121,7 +113,7 @@ const App = function () {
 				</div>
 			</header>
 			<main className="container__content content">
-				{countriesActive ?
+				{!countryData.length ?
 					<div className="content__countries">
 						<div className="content__control">
 							<SearchInput onChange={onInput} val={searchVal}/>
@@ -134,11 +126,11 @@ const App = function () {
 						</div>
 						<CardList data={data} region={region} searchVal={searchVal} onClick={countryChoise}/>
 					</div> :
-					<Country data={data} countryData={countryData}/>
+					<Country data={data} countryData={countryData[countryData.length - 1]}/>
 				}
 			</main>
 		</div>
 	)
-}
+};
 
 export default App

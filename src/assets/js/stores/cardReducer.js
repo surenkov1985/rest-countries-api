@@ -1,16 +1,17 @@
 import React from "react"
 
-import {GET_DATA, INPUT_TEXT, SET_REGION} from "./types"
+import {GET_DATA, INPUT_TEXT, SET_REGION, SET_BORDER} from "./types"
 
 const initialState = {
 	data: [],
 	searchText: "",
-	region: "All"
+	borderData: {},
+	region: "All",
+	borderActive: false
 };
 
 export const cardReducer = (state = initialState, action) => {
 
-	console.log(state, action)
 	switch (action.type) {
 		case GET_DATA:
 			return {
@@ -26,7 +27,7 @@ export const cardReducer = (state = initialState, action) => {
 			return {
 				...state,
 				region: action.region
-			}
+			};
 
 		default: return state;
 	}

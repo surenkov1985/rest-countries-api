@@ -1,4 +1,4 @@
-import { GET_DATA, DROP_ITEM, INPUT_TEXT, SET_COUNTRY, SET_COUNTRY_ACTIVE, SET_REGION, THEME_TOGGLE } from "./types"
+import { GET_DATA, DROP_ITEM, INPUT_TEXT, SET_COUNTRY, SET_COUNTRY_ACTIVE, SET_REGION, THEME_TOGGLE, SET_BORDER } from "./types"
 
 
 export const getData = () => {
@@ -52,11 +52,23 @@ export const setCountry = (data) => {
 	}
 };
 
-export const setCountryActivate = (active) => {
+export const setBorder = (name, data) => {
+
+	const border = data.find((res) => {
+		return res.name === name
+	});
 
 	return {
-		type: SET_COUNTRY_ACTIVE,
-		active
+		type: SET_BORDER,
+		borderData: border
+	}
+};
+
+
+export const setCountryActivate = () => {
+
+	return {
+		type: SET_COUNTRY_ACTIVE
 	}
 };
 
